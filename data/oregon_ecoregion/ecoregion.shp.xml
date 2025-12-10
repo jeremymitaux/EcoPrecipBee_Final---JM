@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri>
+		<CreaDate>20240228</CreaDate>
+		<CreaTime>00580100</CreaTime>
+		<ArcGISFormat>1.0</ArcGISFormat>
+		<SyncOnce>FALSE</SyncOnce>
+		<DataProperties>
+			<itemProps>
+				<itemName Sync="TRUE">ecoregion</itemName>
+				<nativeExtBox>
+					<westBL Sync="TRUE">-13865897.924300</westBL>
+					<eastBL Sync="TRUE">-12965375.138800</eastBL>
+					<southBL Sync="TRUE">5159750.309300</southBL>
+					<northBL Sync="TRUE">5818210.991900</northBL>
+					<exTypeCode Sync="TRUE">1</exTypeCode>
+				</nativeExtBox>
+				<imsContentType Sync="TRUE">002</imsContentType></itemProps>
+			<coordRef>
+				<type Sync="TRUE">Projected</type>
+				<geogcsn Sync="TRUE">GCS_WGS_1984</geogcsn>
+				<csUnits Sync="TRUE">Linear Unit: Meter (1.000000)</csUnits>
+				<projcsn Sync="TRUE">WGS_1984_Web_Mercator_Auxiliary_Sphere</projcsn>
+				<peXml Sync="TRUE">&lt;ProjectedCoordinateSystem xsi:type='typens:ProjectedCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/3.1.0'&gt;&lt;WKT&gt;PROJCS[&amp;quot;WGS_1984_Web_Mercator_Auxiliary_Sphere&amp;quot;,GEOGCS[&amp;quot;GCS_WGS_1984&amp;quot;,DATUM[&amp;quot;D_WGS_1984&amp;quot;,SPHEROID[&amp;quot;WGS_1984&amp;quot;,6378137.0,298.257223563]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433]],PROJECTION[&amp;quot;Mercator_Auxiliary_Sphere&amp;quot;],PARAMETER[&amp;quot;False_Easting&amp;quot;,0.0],PARAMETER[&amp;quot;False_Northing&amp;quot;,0.0],PARAMETER[&amp;quot;Central_Meridian&amp;quot;,0.0],PARAMETER[&amp;quot;Standard_Parallel_1&amp;quot;,0.0],PARAMETER[&amp;quot;Auxiliary_Sphere_Type&amp;quot;,0.0],UNIT[&amp;quot;Meter&amp;quot;,1.0],AUTHORITY[&amp;quot;EPSG&amp;quot;,3857]]&lt;/WKT&gt;&lt;XOrigin&gt;-20037700&lt;/XOrigin&gt;&lt;YOrigin&gt;-30241100&lt;/YOrigin&gt;&lt;XYScale&gt;10000&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;0.001&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;WKID&gt;102100&lt;/WKID&gt;&lt;LatestWKID&gt;3857&lt;/LatestWKID&gt;&lt;/ProjectedCoordinateSystem&gt;</peXml>
+			</coordRef>
+		</DataProperties>
+		<SyncDate>20240126</SyncDate>
+		<SyncTime>11155000</SyncTime>
+		<ModDate>20240126</ModDate>
+		<ModTime>11155000</ModTime>
+	</Esri>
+	<mdChar>
+		<CharSetCd value="004"/>
+	</mdChar>
+	<mdHrLv>
+		<ScopeCd value="005"/>
+	</mdHrLv>
+	<mdContact>
+		<rpIndName>Data Administrator</rpIndName>
+		<rpOrgName>Geospatial Enterprise Office</rpOrgName>
+		<rpPosName>Data Administrator</rpPosName>
+		<rpCntInfo>
+			<cntPhone>
+				<voiceNum>503.378.2166</voiceNum>
+			</cntPhone>
+			<cntAddress addressType="both">
+				<delPoint>530 Airport Rd SE​ Suite C</delPoint>
+				<city>Salem</city>
+				<adminArea>Oregon</adminArea>
+				<postCode>97301</postCode>
+				<eMailAdd>gis.info@das.oregon.gov</eMailAdd>
+			</cntAddress>
+			<cntHours>8:00am - 5:00pm M-F</cntHours>
+		</rpCntInfo>
+		<role>
+			<RoleCd value="007"/>
+		</role>
+	</mdContact>
+	<mdDateSt>20090616</mdDateSt>
+	<mdStanName>ArcGIS Metadata</mdStanName>
+	<mdStanVer>1.0</mdStanVer>
+	<distInfo>
+		<distTranOps>
+			<onLineSrc>
+				<linkage>https://ftp.gis.oregon.gov/framework/adminbound/ecoregion.zip</linkage>
+			</onLineSrc>
+		</distTranOps>
+		<distFormat><formatName Sync="TRUE">File Geodatabase Feature Class</formatName></distFormat></distInfo>
+	<dataIdInfo><idCitation><resTitle>Oregon Ecoregions</resTitle><date><pubDate>1995</pubDate></date><citRespParty><rpOrgName>Oregon Natural Heritage Program</rpOrgName><role><RoleCd value="006"/></role></citRespParty><citRespParty><rpOrgName>Oregon Natural Heritage Program</rpOrgName><rpCntInfo><cntAddress><delPoint>Oregon Natural Heritage Program</delPoint></cntAddress></rpCntInfo><role><RoleCd value="010"/></role></citRespParty><otherCitDet>Source Scale 1:250000</otherCitDet><presForm><PresFormCd value="005" Sync="TRUE"/></presForm></idCitation><idAbs>This data layer is an element of the Oregon GIS Framework. Ecoregions denote areas of general similarity in ecosystems and in the type quality, and quantity of environmental resources. This map depicts revisions and subdivisions of ecoregions that was compiled at a relatively small scale (Omernik 1987). Compilation of this map, performed at the larger 1:250,000 scale, was part of a collaborative project between the United StatesEnvironmental Protection Agency, National Health and Environmental EffectsResearch Laboratory (NHEERL)- Corvallis, OR., the U.S. Forest Service, Natural Resources Conservation Service, Washington State Department of Natural Resources and the Oregon Natural Heritage Program. The ecoregions and subregion are designed to serve as a spatial framework for environmental resource management. The most immediate needs by the states are for developing regulations, biological criteria and water quality standards, and for setting management goals for nonpoint-source pollution. Explanation of the methods used to describe the ecoregions are given in Omernik (1995), Griffith et al. (1994), and Gallan et al. (1989). This map is a draft product of one of a few regional interagency collaborative projects aimed at obtaining consensus between the EPA, the NRCS, and the USFS regarding alignments of ecological regions.</idAbs><idPurp>Assist managers of aquatic and terrestrial resources in understanding theregional patterns of the realistically attainable quality of theseresources.</idPurp><idStatus><ProgCd value="007"/></idStatus><idPoC><rpIndName>Data Administrator</rpIndName><rpOrgName>Geospatial Enterprise Office</rpOrgName><rpPosName>Data Administrator</rpPosName><rpCntInfo><cntPhone><voiceNum>503.378.2166</voiceNum></cntPhone><cntAddress addressType="both"><delPoint>530 Airport Rd SE​ Suite C</delPoint><city>Salem</city><adminArea>Oregon</adminArea><postCode>97301</postCode><eMailAdd>gis.info@das.oregon.gov</eMailAdd></cntAddress><cntHours>8:00am - 5:00pm M-F</cntHours></rpCntInfo><role><RoleCd value="007"/></role></idPoC><resMaint><maintFreq><MaintFreqCd value="010"/></maintFreq></resMaint><placeKeys><keyword>oregon</keyword></placeKeys><themeKeys><keyword>level 4 ecoregions</keyword><keyword>LandUseLandCoverFramework</keyword><keyword>bioscience</keyword><keyword>environment</keyword><thesaName><resTitle>Land Use Land Cover</resTitle></thesaName></themeKeys><searchKeys><keyword>level 4 ecoregions</keyword><keyword>LandUseLandCoverFramework</keyword><keyword>bioscience</keyword><keyword>environment</keyword><keyword>oregon</keyword></searchKeys><resConst><Consts><useLimit>for use at 1:250,000 or smaller scales.</useLimit></Consts></resConst><resConst><LegConsts><useLimit>The Oregon Geospatial Data Clearinghouse (OGDC), the State of Oregon or any of the data providers cannot accept any responsibility for errors, omissions, or positional accuracy in the digital data or underlying records. There are no warranties, expressed or implied, including the warranty of merchantability or fitness for a particular purpose, accompanying any of these products.</useLimit><accessConsts><RestrictCd value="008"/></accessConsts><othConsts>None.</othConsts></LegConsts></resConst><resConst><SecConsts><class><ClasscationCd value="001"/></class></SecConsts></resConst><aggrInfo><aggrDSName><resTitle>Ecoregion.pdf Ecoregion Description PDF attched in zip file.</resTitle><date><pubDate>2000</pubDate></date></aggrDSName><assocType><AscTypeCd value="001"/></assocType></aggrInfo><tpCat><TopicCatCd value="007"/></tpCat><dataExt><geoEle><GeoBndBox><exTypeCode>true</exTypeCode><westBL>-124.799228</westBL><eastBL>-116.426571</eastBL><northBL>46.278522</northBL><southBL>41.920409</southBL></GeoBndBox></geoEle></dataExt><dataExt><exDesc>publication date</exDesc><tempEle><TempExtent><exTemp><TM_Instant><tmPosition>1995</tmPosition></TM_Instant></exTemp></TempExtent></tempEle><geoEle/></dataExt><suppInfo>1) All ecoregion and subregion delineations are digitized from theU.S.G.S. 1:250,000 base maps. Prior to digitizing each base map must beinitialized to orient the map and relate it in geographic coordinates tothe surface of the earth. When the registration tics are entered at thestart of digitizing a transformation error of less than 0.003 must be achieved inorder to insure a high level of registration accuracy. The personresponsible for digital data entry completes a data sheet describingcoverage name, date of entry, and whether a topology for the coverage isestablished.2) After each 1:250,000 base map has been digitized, a topologyfor each coverage is established. This function creates unique identities for each polygon.3) Next each base map is tested for polygon errors through aninternal editing function. Errors are corrected for unlabeled polygons,unclosed polygons, or polygons with more than one label. Topology isreestablished for each coverage and tested again until no error areindicated.4) The digital coverage is then plotted at the same scale as theoriginal base map. This coverage is overlaid on a light table with theoriginal and visually inspected for replication of original lines withdigitized lines. Two individuals independently inspect the coverage for accuracy.Revisions:Revision 1. 9/95.This coverage was appended from completed Level IV coverages in Oregon and Washington [Coast Range (completed 9/92), Blue Mountains and Columbia Plateau (7/95), Puget lowlands, Willamette Valley, Cascades,East Cascade Slope, North Cascades and Klamath Mountains ecoregions (6/95)2. 6/96 update coverage. delete 'hatched' areas. Consolidateall volcanics. updated lines per Sandy and Davids requests.3. Revised level IV ecoregions in E. Oregon and E. Washington and addedecoregions for Idaho. 11/00Reviews_Applied_to_Data:Data was reviewed by David Pater, MERSC, 9/95.Data was reviewed by David Pater, and Sandy Bryce, MERSC, 6/96.Data was reviewed by Alan Woods, Dynamac, 11/00</suppInfo><envirDesc Sync="FALSE">Esri ArcGIS 13.1.0.41833</envirDesc><dataLang><languageCode value="eng" Sync="TRUE"/><countryCode value="USA" Sync="TRUE"/></dataLang><spatRpType><SpatRepTypCd value="001" Sync="TRUE"/></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="search"><exTypeCode Sync="TRUE">1</exTypeCode><westBL Sync="TRUE">-124.559480</westBL><eastBL Sync="TRUE">-116.469947</eastBL><northBL Sync="TRUE">46.235761</northBL><southBL Sync="TRUE">41.991794</southBL></GeoBndBox></geoEle></dataExt></dataIdInfo>
+	<mdMaint>
+		<maintFreq>
+			<MaintFreqCd value="012"/>
+		</maintFreq>
+		<maintNote>Last metadata review date: 2024-01-25</maintNote>
+	</mdMaint>
+	<dqInfo>
+		<dqScope>
+			<scpLvl>
+				<ScopeCd value="005"/>
+			</scpLvl>
+		</dqScope>
+		<report type="DQConcConsis">
+			<measDesc>Polygon and chain-node topology present.</measDesc>
+		</report>
+		<dataLineage>
+			<dataSource>
+				<srcScale>
+					<rfDenom>250000</rfDenom>
+				</srcScale>
+			</dataSource>
+		</dataLineage>
+	</dqInfo>
+	<eainfo>
+		<detailed Name="ecoregion">
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+			</attr>
+			<attr><attrlabl Sync="TRUE">OBJECTID</attrlabl><attalias Sync="TRUE">OBJECTID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv></attr><attr>
+				<attrlabl>AREA</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>PERIMETER</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>ECOREGION_</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>ECOREGION1</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>ECO</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>NAME</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>LEVEL3</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>LEV3_NAME</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>ORNHP_REG</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>ORNHP_NAME</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>TNC_REG</attrlabl>
+			</attr>
+			<attr>
+				<attrlabl>TNC_NAME</attrlabl>
+			</attr>
+			<enttyp><enttypl Sync="TRUE">ecoregion</enttypl><enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">259</enttypc></enttyp><attr><attrlabl Sync="TRUE">Shape_Length</attrlabl><attalias Sync="TRUE">Shape_Length</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Length of feature in internal units.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Positive real numbers that are automatically generated.</udom></attrdomv></attr><attr><attrlabl Sync="TRUE">Shape_Area</attrlabl><attalias Sync="TRUE">Shape_Area</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Area of feature in internal units squared.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Positive real numbers that are automatically generated.</udom></attrdomv></attr></detailed>
+		<overview>
+			<eaover>ORWA_ECO.PATECO - ecoregion ID code1 Coast Range1a Coastal Lowlands1b Coastal Uplands1c Low Olympics1d Volcanics1e Outwash1f Willapa Hills1g Mid-Coastal Sedimentary1h Southern Oregon Coastal Mountains1i Redwood Zone2 Puget Lowland2a Fraser Lowland2b Eastern Puget Riverine Lowlands2c San Juan Islands2d Olympic Rainshadow2e Eastern Puget Uplands2f Central Puget Lowland2g Southern Puget Prairies2h Cowlitz/Chehalis Foothills2i Cowlitz/Newaukum Prairie Floodplains3 Willamette Valley3a Portland/Vancouver Basin3b Willamette River and Tributaries Gallery Forest3c Prairie Terraces3d Valley Foothills4 Cascades4a Western Cascades Lowlands and Valleys4b Western Cascades Montane Highlands4c Cascade Crest Montane Forest4d Cascade Subalpine/Alpine10 Columbia Plateau10a Channeled Scablands10b Loess Islands10c Umatilla Plateau10d Okanogan Drift Hills10e Pleistocene Lake Basins10f Dissected Loess Uplands10g Yakima Folds10h Palouse Hills10i Deep Loess Foothills10j Nez Perce Prairie10k Deschutes/John Day Canyons10l Lower Snake and Clearwater Canyons10m Okanogan Valley11 Blue Mountains11a John Day/Clarno Uplands11b John Day/ Clarno Highlands11c Maritime-Influenced Zone11d Melange11e Wallowas/Seven Devils Mountains11f Canyons and Dissected Highlands11g Canyons and Dissected Uplands11h Continental Zone Highlands11i Continental Zone Foothills11k Blue Mountain Basins11l Mesic Forest Zone11m Subalpine Zone11n Deschutes River Valley11o Cold Basins12 Snake River Plain12a Treasure Valley12b Lava Fields12c Camas Prairie12d Dissected Plateaus and Teton Basin12e Upper Snake River Plain12f Semiarid Foothills12g Eastern Snake River Basalt Plains12h Mountain Home Uplands12i Magic Valley12j Unwooded Alkaline Foothills13 Central Basin and Range13a Salt Deserts13b Shadscale-Dominated Saline Basins13c Sagebrush Basins and Slopes13d Woodland- and Shrub-Covered Low Mountains13e High Elevation Forested Mountains13f Moist Wasatch Front Footslopes13g Wetlands13h Salt Desert Shrub Valleys13i Malad and Cache Valleys15 Northern Rockies15a Grave Creek Range-Nine Mile Divide15b Camas Valley15c Flathead Valley15d Tobacco Plains15e Flathead Hills and Mountains15f Grassy Potlatch Ridges15g Western Okanogan Semiarid Foothills15h High Northern Rockies15i Clearwater Mountains and Breaks15j Lower Clearwater Canyons15k Clark Fork Valley and Mountains15l Salish Mountains15m Kootenai Valley15n Weippe Prairie15o Coeur d'Alene Metasedimentary Zone15p St. Joe Schist-Gneiss Zone15q Purcell-Cabinet-North Bitterroot Mountains15r Okanogan-Colville Xeric Valleys and Foothills15s Spokane Valley Outwash Plains15t Stillwater-Swan Wooded Valley15u Inland Maritime Foothills and Valleys15v Northern Idaho Hills and Low Relief Mountains15w Western Selkirk Maritime Forest15x Okanogan Highland Dry Forest15y Granitic Selkirk Mountains16 Idaho Batholith16a Eastern Batholith16b Lochsa Uplands16c Lochsa-Selway-Clearwater Canyons16d Dry, Partly Wooded Mountains16e Glaciated Bitterroot Mountains and Canyons16f Foothill Shrublands-Grasslands16g High Glacial Drift-Filled Valleys16h High Idaho Batholith16i South Clearwater Forested Mountains16j Hot Dry Canyons16k Southern Forested Mountains17 Middle Rockies17d Eastern Gravelly Mountains17e Barren Mountains17f Crazy Mountains17g Absaroka-Gallatin-Madison-Bridger Sedimentary Mountains17h High Elevation Rockland Alpine Zone17i Absaroka-Gallatin Volcanic Mountains17j West Yellowstone Valley17k Lady of the Lake17l Gneissic-Schistose Forested Mountains17m Big Horn-Pryor Mountains17n Cold Valleys17o Partly Forested Mountains17p Foothill Potholes17q Big Snowy-Little Belt Carbonate Mountains17r Scattered Eastern Igneous-Core Mountains17s Bitterroot-Frenchtown Valley17t Limy Foothill Savanna17u Paradise Valley17v Big Belt Forested Highlands17w Townsend Basin17x Rattlesnake-Blackfoot-South Swan-Northern Garnet-Sapphire Mountains17y Townsend-Horseshoe-London Sedimentary Hills17z Tobacco Root Mountains17aa Dry Intermontane Sagebrush Basins17ab Dry Gneissic-Schistose-Volcanic Hills17ac Big Hole17ad Western Beaverhead Mountains17ae Forested Beaverhead Mountains17af Centennial Basin17ag Pioneer-Anaconda Ranges17ah Eastern Pioneer Sedimentary Mountains17ai Elkhorn Mountains-Boulder Batholith17aj Eastern Divide Mountains17ak Deer Lodge-Philipsburg-Avon Grassy Intermontane Hills and Valleys17al Southern Garnet Sedimentary-Volcanic Mountains17am Flint Creek-Anaconda Mountains18 Wyoming Basin18a Rolling Sagebrush Steppe18b Northern Semiarid Intermontane Basin18c Wet Valleys18d Semiarid Bear Hills19 Wasatch and Uinta Mountains19a Alpine Zone19b Uinta Subalpine Forests19c Mid-Elevation Uinta Mountains19d Wasatch Montane Zone19e High Plateaus19f Semiarid Foothills19g Mountain Valleys20 Colorado Plateaus20g Northern Uinta Basin Slopes41 Canadian Rockies41a Northern Front41b Crestal Alpine-Subalpine Zone41c Western Canadian Rockies41d Southern Carbonate Front41e Flathead Thrust Faulted Carbonate-Rich Mountains42 Northwestern Glaciated Plains42j Glaciated Northern Grasslands42l Sweetgrass Uplands42m Cherry Patch Moraines42n Milk River Pothole Upland42o North Central Brown Glaciated Plains42p Foothill Grassland42q Rocky Mountain Front Foothill Potholes43 Northwestern Great Plains43l Missouri Breaks Woodland-Scrubland43m Judith Basin Grassland43n Central Grassland43o Unglaciated Montana High Plains43p Ponderosa Pine Forest-Savanna Hills43r Pryor-Big Horn Foothills43s Non-calcareous foothill grassland43t Smith-Shield Valleys43u Limy Foothill Grassland77 North Cascades77a North Cascades Lowland Forests77b North Cascades Highland Forests77c North Cascades Subalpine/Alpine77d Pasayten/Sawtooth Highlands77e Okanogan Pine/Fir Hills77f Chelan Tephra Hills77g Wenatchee/Chelan Highlands77h Chiwaukum Hills and Lowlands77i High Olympics78 Klamath Mountains78a Rogue/Illinois Valleys78b Siskiyou Foothills78c Umpqua Interior Foothills78d Serpentine Siskiyous78e Inland Siskiyous78f Coastal Siskiyous78g Klamath River Ridges80 Northern Basin and Range80a Dissected High Lava Plateau80b Sagebrush Steppe- and Woodland-Covered Hills and Low Mountains80c High Elevation Forests and Shrublands80d Pluvial Lake Basins80e High Desert Wetlands80f Owyhee Uplands and Canyons80g High Lava Plains80h Saltbush-Dominated Valleys80i Sagebrush Steppe Valleys80j Semiarid Uplands80k Partly Forested4e High Southern Cascades Montane Forest4f Umpqua Cascades4g Southern Cascades9 Eastern Cascade Slope and Foothills9a Yakima Plateau  Slopes9b Grand Fir Mixed Forest9c Oak/Conifer Eastern Cascades-Columbia Foothills9d Ponderosa Pine/Bitterbrush Woodland9e Pumice Plateau Forest9f Cold Wet Pumice Plateau Basins9g Klamath/Goose Lake Warm Wet Basins9h Fremont Pine/Fir Forest9i Southern Cascade Slope9j Klamath Juniper/Ponderosa Pine Woodland</eaover>
+		</overview>
+	</eainfo>
+	<mdLang><languageCode value="eng" Sync="TRUE"/><countryCode value="USA" Sync="TRUE"/></mdLang><mdHrLvName Sync="TRUE">dataset</mdHrLvName><refSysInfo><RefSystem><refSysID><identCode code="3857" Sync="TRUE"/><idCodeSpace Sync="TRUE">EPSG</idCodeSpace><idVersion Sync="TRUE">6.18.3(9.3.1.2)</idVersion></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><geometObjs Name="ecoregion"><geoObjTyp><GeoObjTypCd value="002" Sync="TRUE"/></geoObjTyp><geoObjCnt Sync="TRUE">259</geoObjCnt></geometObjs><topLvl><TopoLevCd value="001" Sync="TRUE"/></topLvl></VectSpatRep></spatRepInfo><spdoinfo><ptvctinf><esriterm Name="ecoregion"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom code="4" Sync="TRUE"/><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">259</efeacnt><spindex Sync="TRUE">TRUE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf></spdoinfo></metadata>
