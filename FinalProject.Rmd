@@ -1,5 +1,262 @@
 ---
-title: "FinalProject"
+title: "Final Project Write Up"
+author: "Jeremy Mitaux"
+date: "2025-12-10"
 output: html_document
 ---
 
+# Introduction
+
+Bees provide essential pollination services for both wild and cultivated plants, yet global and regional declines in bee diversity are increasingly reported (Potts, Simon G., et al. 2016; Ollerton, 2017). In the Pacific Northwest, native bee conservation has become a major concern as variations in yearly precipitation, temperature patterns, and floral phenology continue to increase (Kerr, Jeremy T., et al. 2015). Understanding how climatic gradients influence bee distributions is critical for predicting future biodiversity shifts and identifying conservation priorities. Insights from such studies is invaluable to ecologists and governments as we adapt to a changing world. Oregon’s diverse habits from the wet Coast Range to the arid high desert, create natural gradients for testing how climate (and in particular precipitation) affects native bee communities.
+
+Previous studies have shown that bee richness in a particular area can be attributed to the local environment whether that be altitude (Hoiss et al., 2012) or where floral resources are abundant and not limited by drought or excessive moisture (Classen et al. 2015). In North America multiple analyses have found increased species homogenization in agricultural landscapes (Ponisio, et al. 2025). The Oregon Bee Atlas directed by OSU Extension and launched in 2018, fills a key gap by providing species-level records of bees across Oregon. Each record includes coordinates, date, collector, and associated floral host, enabling multi-year spatial analyses of bee diversity and composition.
+
+This project aims to address concerns due to these changing conditions. By combining Oregon Bee Atlas data along with precipitation measurements provided by the PRISM Group as OSU, along with Oregon ecoregions, I hope to answer the following: 
+
+  1. In what ways do Oregon ecoregions compare in bee species richness? 
+  
+  2. Do yearly precipitation patterns influence species richness and which
+regions are most affected? How does variability changes between ecoregions when precipitation patterns change?
+
+# Data 
+1. List 
+- PRISM Climate Data (annual precipitation, 2018–2024)
+URL: https://prism.oregonstate.edu/recent/ 
+Source: PRISM Climate Group / Oregon State University
+Description: 4-km and 800m gridded monthly precipitation (ppt) and average climate (fahrenheit) data in raster for the continental US. Data is available in multiple temporal periods (daily, monthly, and yearly). This file will modified to only include Oregon. In addition I will be changing the precipitation values into in inches. 
+
+- Oregon Ecoregions 
+URL: https://geohub.oregon.gov/datasets/oregon-geo::oregon-ecoregions/explore 
+Source: State of Oregon 
+Description: "Ecoregions denote areas of general similarity in ecosystems and in the type quality, and quantity of environmental resources. This map depicts revisions and subdivisions of ecoregions that was compiled at a relatively small scale (Omernik 1987)." This shape file will be used to make groups by region of bee occurances, furthermore we can compare precipitation by region as well. 
+
+- Oregon State Bounardary
+URL: https://geohub.oregon.gov/datasets/oregon-state-boundary/about 
+Description: Shape file used to crop the precipitation raster data which includes the entire lower 48.
+
+- Oregon Bee Atlas 
+With the Oregon Bee Atlas Data, my plan is to get rid of the columns I don’t plan on using, leaving just the bee species identified and location. From there I will match the records with the PRISM data.
+Citation: 
+Best, L., J. Engler, C. Feuerborn, J. Larsen, B. Lindh, C. J. Marshall, A. Melathopoulos, S. Kincaid, S.V. J. Robinson. 2022. Oregon Bee Atlas: Wild bee findings from 2019. Catalog of the Oregon State Arthropod Collection. 6(1): 1—13. DOI: http://dx.doi.org/10.5399/osu/cat_osac.6.1.4906.
+
+2. Load in packages and data
+
+```{r load-libraries-3, echo=FALSE, results="hide", message=FALSE, warning=FALSE}
+library(terra) 
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+library(sf) 
+```
+
+Import Oregon Bee Atlas Data, remove columns, and filter years 
+```{r}
+# Import OBA data, and filter the longitude and latitude columns 
+oba_import <- read.csv("data/OBA_2018-2024.csv")
+oba_clean <- oba_import %>%
+  filter(!is.na(decimalLatitude),
+         !is.na(decimalLongitude)) %>%
+  filter(decimalLatitude  >= 41.99179  & decimalLatitude  <= 46.23576,
+         decimalLongitude >= -124.5595 & decimalLongitude <= -116.4699)
+oba_clean <- oba_clean[, c("year", "decimalLatitude", "decimalLongitude",
+                           "genus", "specificEpithet")]
+
+# Creating a spatial object 
+oba_sf <- st_as_sf(
+  oba_clean,
+  coords = c("decimalLongitude", "decimalLatitude"),
+  crs = 4326,      # WGS84
+  remove = FALSE
+)
+```
+
+Load in PRISM data, shape file, and Oregon eco regions
+```{r}
+# Oregon boundary shape file 
+or_bound <- vect("data/Oregon_Boundary/Oregon_State_Boundary.shp") |>
+  st_as_sf()
+or_bound <- st_transform(or_bound, 4326)
+
+# Precipitation raster data 
+rast_2018 <- rast("data/prism_2018/prism_ppt_us_30s_2018.tif")
+rast_2019 <- rast("data/prism_2019/prism_ppt_us_30s_2019.tif")
+rast_2020 <- rast("data/prism_2020/prism_ppt_us_30s_2020.tif")
+rast_2021 <- rast("data/prism_2021/prism_ppt_us_30s_2021.tif")
+rast_2022 <- rast("data/prism_2022/prism_ppt_us_30s_2022.tif")
+rast_2023 <- rast("data/prism_2023/prism_ppt_us_30s_2023.tif")
+rast_2024 <- rast("data/prism_2024/prism_ppt_us_30s_2024.tif")
+
+precip_2018 <- crop(rast_2018, or_bound) # for 2018
+precip_2018$precip_inch <- precip_2018$prism_ppt_us_30s_2018 / 25.4 #convert mm to in 
+
+precip_2019 <- crop(rast_2019, or_bound) # for 2019
+precip_2019$precip_inch <- precip_2019$prism_ppt_us_30s_2019 / 25.4
+
+precip_2020 <- crop(rast_2020, or_bound) # for 2020
+precip_2020$precip_inch <- precip_2020$prism_ppt_us_30s_2020 / 25.4
+
+precip_2021 <- crop(rast_2021, or_bound) # for 2021
+precip_2021$precip_inch <- precip_2021$prism_ppt_us_30s_2021 / 25.4
+
+precip_2022 <- crop(rast_2022, or_bound) # for 2022
+precip_2022$precip_inch <- precip_2022$prism_ppt_us_30s_2022 / 25.4
+
+precip_2023 <- crop(rast_2023, or_bound) # for 2023
+precip_2023$precip_inch <- precip_2023$prism_ppt_us_30s_2023 / 25.4
+
+precip_2024 <- crop(rast_2024, or_bound) # for 2024
+precip_2024$precip_inch <- precip_2024$prism_ppt_us_30s_2024 / 25.4
+
+# Oregon eco region
+or_ecoregion <- vect("data/oregon_ecoregion/ecoregion.shp") |> 
+  st_as_sf()
+or_ecoregion <- st_transform(or_ecoregion, 4326) %>%
+  filter(LEV3_NAME != "Puget Lowland") # I have no idea why this was in the data but removing it because pretty sure that's in Washington
+
+#Create a shape file with precipitation values 
+oba_or_sf <- oba_sf[or_bound, ]
+```
+
+# Data Wrangling, Summarizing, and Exploring 
+
+```{r}
+# Joining each bee record to its respective Level 3 eco region 
+oba_eco <- st_join(
+  oba_or_sf,
+  or_ecoregion[, c("LEV3_NAME")],  # just keep the ecoregion name
+  join = st_intersects,
+  left = TRUE
+)
+
+#This creates a metric for 'species richness' by counting unique strings
+eco_rich <- oba_eco %>%
+  st_drop_geometry() %>%
+  group_by(LEV3_NAME) %>%
+  summarize(
+    richness = n_distinct(paste(genus, specificEpithet)),
+    .groups = "drop"
+  )
+or_eco_rich <- or_ecoregion %>%
+  left_join(eco_rich, by = "LEV3_NAME")
+```
+
+```{r}
+# This will be the data used from the Oregon Bee Atlas
+# I've removed all the columns that I don't plan on using, such as plants, collecting method, collector name, etc. 
+# I have also made 'oba_sf' which is a shapefile that can be used to plot bee occurrences with the raster data 
+head(oba_clean)
+```
+
+To calculate richness, the 'genus' and 'specificEpithet' columns are pasted together.
+From there we calculate the number of unique strings with the n_distinct function. 
+NOTE: This isn't a perfect measurement of species richness. This measurement only indicates how many different species were found, but doesn't indicate the abundance of them. Therefore there could be regions that are low in 'richness' yet still have high
+populations of pollinators.
+
+```{r}
+eco_rich_yr <- oba_eco %>%
+  st_drop_geometry() %>% 
+  group_by(year, LEV3_NAME) %>% 
+  filter(!is.na(LEV3_NAME)) %>%
+  summarize(
+    richness = n_distinct(paste(genus, specificEpithet)),
+    .groups = "drop"
+)
+eco_rich_yr
+```
+
+Lets make a visualization to better understand this
+
+```{r}
+eco_totals <- eco_rich_yr %>%
+  group_by(LEV3_NAME) %>%
+  summarise(total_richness = sum(richness, na.rm = TRUE))
+
+eco_rich_yr <- eco_rich_yr %>%
+  mutate(
+    LEV3_NAME = recode(
+      LEV3_NAME,
+      "Eastern Cascades Slopes and Foothills" = "Eastern Cascades" # easier to read
+    )
+  )
+# I wanted the chart to show the ecoregions in a west to east manner
+eco_order <- c(
+  "Coast Range",
+  "Willamette Valley",
+  "Cascades",
+  "Eastern Cascades", 
+  "Klamath Mountains",
+  "Blue Mountains",
+  "Northern Basin and Range",
+  "Central Basin and Range",
+  "Columbia Plateau",
+  "Snake River Plain"
+)
+eco_rich_yr$LEV3_NAME <- factor(eco_rich_yr$LEV3_NAME, levels = eco_order)
+
+ggplot(eco_rich_yr, aes(x = LEV3_NAME, y = richness)) +
+  geom_col(aes(fill = factor(year)), position = "dodge") +
+  labs(
+    x = "Ecoregion",
+    y = "# of unique strings\n(genus + species)",
+    fill = "Year",
+    title = "Species Richness by Ecoregion and Year)"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+
+
+```{r}
+#Plot ecoregions and create fun custom colors for them all 
+# I had an llm help with color choices and make edits to visualizations 
+    # for example like how to center the tile on this chart and custom colors/themes
+    # for that reason some of the code isn't that graceful, but hope the visualizations are appealing enough and most of all get the point across
+
+eco_cols <- c(
+  "Coast Range" = "#1b9e77",
+  "Blue Mountains" = "#7570b3",
+  "Willamette Valley" = "#e7298a",
+  "Columbia Plateau" = "#66a61e",
+  "Eastern Cascades Slopes and Foothills" = "#e6ab02",
+  "Cascades" = "#a6761d",
+  "Snake River Plain" = "#666666",
+  "Northern Basin and Range" = "#1f78b4",
+  "Klamath Mountains" = "#b2df8a",
+  "Central Basin and Range" = "#fb9a99"
+)
+ggplot() +
+  geom_sf(data = or_ecoregion, 
+          aes(fill = LEV3_NAME), 
+          color = NA) +
+  theme_void() +
+  labs(
+    fill = "Level III Ecoregions",
+    title = "Oregon Ecoregions with Bee Occurrences") +
+    theme(plot.title = element_text(hjust = 2.6))
+```
+
+```{r}
+#plot species richness by eco region
+ggplot() +
+  geom_sf(
+    data = or_eco_rich,
+    aes(fill = richness),
+    color = NA,
+    size = 0.2
+  ) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    na.value = "grey90",
+    name = "Species richness"
+  ) +
+  theme_void() +
+  labs(
+    title = "Bee Species Richness by Ecoregion",
+    subtitle = "# of distinct strings when combining genus and species",
+    x = "Longitude",
+    y = "Latitude",
+  )
+```
