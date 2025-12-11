@@ -1,0 +1,49 @@
+---
+title: "Topic + Workflow proposal"
+author: "Jeremy Mitaux-Maurouard" 
+output: html_document
+---
+
+# Localized Effects of Precipitation on Bee Diversity in Oregon 
+
+## Literature review (~5 paragraphs)
+
+### Paragraph 1 — Problem & significance (big‑picture reviews)
+
+Bees provide essential pollination services for both wild and cultivated plants, yet global and regional declines in bee diversity are increasingly reported (Potts, Simon G., et al. 2016; Ollerton, 2017). In the Pacific Northwest, native bee conservation has become a major concern as variations in yearly precipitation, temperature patterns, and floral phenology continue to increase (Kerr, Jeremy T., et al. 2015). Understanding how climatic gradients influence bee distributions is critical for predicting future biodiversity shifts and identifying conservation priorities. The insights from such studies will be invaluable for ecologists and governments as we adapt to a changing world. Oregon’s diverse habits from the wet Coast Range to the arid high desert, create natural gradients for testing how climate (and in particular precipitation) affects native bee communities.
+
+### Paragraph 2–3 — Past work & data landscape (who/where/how; gaps)
+
+Previous studies have shown that bee richness in a particular area can be attributed to the local environment whether that be altitude (Hoiss et al., 2012) or where floral resources are abundant and not limited by drought or excessive moisture (Classen et al. 2015). In North America multiple analyses have found increased species homogenization in agricultural landscapes (Ponisio, et al. 2025). The Oregon Bee Atlas directed by OSU Extension and launched in 2018, fills a key gap by providing species-level records of bees across Oregon. Each record includes coordinates, date, collector, and associated floral host, enabling multi-year spatial analyses of bee diversity and composition
+
+While the OBA provides crucial data relating to bee occurrences, environmental statistics must be obtained from elsewhere. Climate data will be drawn from PRISM, another program operated through Oregon State University. The group provides a wide range of precipitation and temperature rasters for the continental United States. Through data cleaning, PRISM data will be matched to bee records based on date and location. Previous regional bee–climate studies (Koch et al., 2021) highlight that high-resolution climate integration remains rare in state-level biodiversity. This is a clear area that OBA can address in Oregon. 
+
+### Paragraph 4 — Purpose & why now
+
+Weather is increasingly becoming more varied with year differences growing. This project, by relating OBA bee occurrences to PRISM precipitation/climate data will explore the conditions that best support pollinator communities, and what pollinators are best adapted to certain conditions. I aim to quantify whether bee diversity peaks in intermediate climates and whether community composition differs across dry and wet regions. Given Oregon’s rapidly changing precipitation patterns and growing native bee conservation efforts, this analysis provides timely insights into potential climate sensitivities of pollinator communities. By year data showcasing climate overlaid by OBA occurrences will offer a friendly visualization to relate the two. 
+
+### Paragraph 5 — Hypotheses (directional) & brief rationale
+- H1: I predict bee species richness will correlate positively with precipitation up to a threshold and decline in very wet conditions. Furthermore climate will provide additional context (i.e drought years with higher avg. temp will result in less bee occurances). In doing so I hope to support the opposing constraints of drought (limited food) and excessive rainfall (limited pollinating opportunities).
+- H2: Bee community composition will differ significantly along Oregon’s natural precipitation gradient. Xeric-adapted species should dominate in eastern counties and mesic species in the west of the Cascades. These hypotheses are grounded in previous work showing climate relationships and different species identified along moisture gradients (Hoiss et al., 2012; Classen et al., 2015).
+
+## Dataset identification
+- PRISM Climate Data (annual precipitation, 2018–2024)
+URL: https://prism.oregonstate.edu/recent/ 
+Collector: PRISM Climate Group / Oregon State University
+Description: 4-km and 800m gridded monthly precipitation (ppt) and average climate (fahrenheit) data in raster for the continental US. Data is available in multiple temporal periods (daily, monthly, and yearly).
+
+- OBA → transformed to … (plan and rationale) 
+With the Oregon Bee Atlas Data, my plan is to get rid of the columns I don’t plan on leaving just the bee species identified, and its location. From there I will match the records with the PRISM data.
+
+## Workflow plan (prose)
+1) Cleaning & validation: The PRISM data is going to be raster data that needs to be filtered. So I will get rid of all the info from other states leaving just Oregon precipitation and climate data. From here I will need to match bee occurrences to what climate they would have been experiencing at the time of discovery (longitude and latitude). By matching bee occurrences with respective weather data, I should have a nice data set correlating  bee occurrences to localized weather  
+
+2) Aggregations/derivations: Depending on the amount of records that I have, I plan on aggregating or grouping occurrences by month and year. Furthermore, using county information in OBA, I could also group by county to compare drier and wetter areas in Oregon. 
+
+3) Functions/loops (inputs → outputs): Planning to write R functions to iterate over years and also months to compute yearly/monthly summaries of richness and precipitation. Additionally I can utilize a for loop or map() to store results in a tidy long-format table for time-series plotting.
+
+4) Statistical test + programmatic implementation: I plan on doing regression models testing the correlation of bee occurrence and precipitation. Other tests could be calculating Bray-Curtis dissimilarities to better understand differences in environments where bees are found. Another computable statistic I have been researching is PERMNOVA (Permutational Multivariate Analysis of Variance).
+
+5) Planned visualizations/tables: I really want to make average yearly and monthly precipitation maps of Oregon, overlaid with bee occurrences. This would be a great way to easily visualize where bees are present, and what conditions they were found in. 
+
+6) Risks & mitigations: Something I am worried about is collection bias. Are there more community scientists in more recent years, and are certain counties documented better than others? These are risks that I am sure will be present. I read this tutorial on spatial sampling https://cran.r-project.org/web/packages/divvy/vignettes/subsampling-vignette.html that seems to address issues where some areas get more observations than others. I still don't fully understand the extent but I am hoping to incorporate this into my project. 
