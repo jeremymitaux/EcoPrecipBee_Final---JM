@@ -456,7 +456,7 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
   ) +
   theme_minimal(base_size = 14)
 ```
-\n There seems to be a stronger, does this mean anything?
+\n There seems to be a stronger relationship, does this mean anything?
 
 ```{r}
 mod_precip <- lm(richness ~ mean_precip, data = eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ])
@@ -480,3 +480,61 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
 ```
 \n An even stronger association is richness by year. 
 
+## Visualizations 
+
+Lets make some nice visualizations of Oregon, with each ecoregion marketed by its mean 
+precipitation. These aren't ground breaking, but they look nice and are good in tandem with
+the previous visualizations made. 
+
+```{r}
+ggplot() +
+  geom_sf(
+    data = or_eco_rich,
+    aes(fill = richness),
+    color = NA,
+    size = 0.2
+  ) +
+  geom_point(data = oba_sf,
+             aes(x = decimalLongitude, y = decimalLatitude),
+             size = 0.1,
+             alpha = 0.1,
+             color = "green"
+  ) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    na.value = "grey90",
+    name = "Species richness"
+  ) +
+  theme_void() +
+  labs(
+    title = "Bee Species Richness by Ecoregion",
+    subtitle = "# of distinct strings when combining genus and species",
+    x = "Longitude",
+    y = "Latitude",
+  )
+```
+
+```{r}
+ggplot() +
+  geom_raster(data = precip_2024,
+              aes(x = x, y = y, fill = precip_inch)
+  ) +
+  geom_point(data = oba_sf[oba_sf$year == "2024", ],
+             aes(x = decimalLongitude, y = decimalLatitude),
+             size = 0.1,
+             alpha = 0.1,
+             color = "green"
+  ) +
+  scale_fill_viridis_c(
+    option = "plasma",
+    na.value = "grey90",
+    name = "Precipitation in."
+  ) +
+  theme_void() +
+  labs(
+    title = "2024 Mean Precipitation with 2024 Bee Occurances",
+    subtitle = "# of distinct strings when combining genus and species",
+    x = "Longitude",
+    y = "Latitude",
+  )
+```
