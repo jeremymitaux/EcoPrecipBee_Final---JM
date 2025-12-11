@@ -54,10 +54,9 @@ Citation:
 Best, L., J. Engler, C. Feuerborn, J. Larsen, B. Lindh, C. J. Marshall, A. Melathopoulos, S. Kincaid, S.V. J. Robinson. 2022. Oregon Bee Atlas: Wild bee findings from 2019. Catalog of the Oregon State Arthropod Collection. 6(1): 1—13. DOI: http://dx.doi.org/10.5399/osu/cat_osac.6.1.4906.
 
 Data Skills Used:
-- Manipulation of tables, time series filtering, functions 
-- Raster and vector spacial data analysis 
-- Regression as a method of measuring correlation between varaibles
-- t-test and interpreting p-values 
+- Manipulation of tables, time series filtering, functions\n
+- Raster and vector spacial data analysis\n
+- Regression/linear models\n
 
 2. Load in packages and data
 
@@ -189,8 +188,7 @@ or_eco_rich <- or_ecoregion %>%
 
 To calculate richness, the 'genus' and 'specificEpithet' columns are pasted together.
 From there we calculate the number of unique strings with the n_distinct function. 
-NOTE: This isn't a perfect measurement of species richness. This measurement only indicates how many different species were found, but doesn't indicate the abundance of them. Therefore there could be regions that are low in 'richness' yet still have high
-populations of pollinators.
+NOTE: This measurement only indicates how many different species were found, but doesn't indicate the abundance of them. Therefore there could be regions that are low in 'richness' yet still have high populations of pollinators.
 
 ```{r}
 eco_rich_yr <- oba_eco %>%
@@ -237,13 +235,13 @@ ggplot(eco_rich_yr, aes(x = LEV3_NAME, y = richness)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-\n I like this visualization for a couple reasons. For one its nice how it kind of reads from 
+
+I like this visualization for a couple reasons. For one its nice how it kind of reads from 
 west to east on the x-axis. Furthermore each ecoregion has species abundance by year, so you can 
 compare regions by region and year simultaneously.
 
 A couple things I notice here is that although most regions show shrinking species abundance, 
 regions such as the Willamette Valley could possibly be changing at a faster rate. 
-
 
 ```{r}
 #Plot ecoregions and create fun custom colors for them all 
@@ -274,6 +272,8 @@ ggplot() +
     theme(plot.title = element_text(hjust = .5))
 ```
 
+Here we can plot Oregon's ecoregions 
+
 ```{r}
 #plot species richness by eco region
 ggplot() +
@@ -296,7 +296,8 @@ ggplot() +
     y = "Latitude",
   )
 ```
-Now lets incorporate the precipitation data 
+
+This says a lot more than the previous visualization. Richness is highest in the Blue Mountains and Eastern Cascades. The coast range also shows lower abundance. Lets incorporate the precipitation data to better understand this. 
 
 ```{r}
 # basic plot for 2024
@@ -310,8 +311,8 @@ labs(
     y = "Latitude",
   )
 ```
-Lets use this precipitation data to learn more from the OBA data. What I am going
-to do now is create mean precipitation values for each ecoregion. 
+
+Now that the precipitation data is loaded in. Below I've done some data manipulation to generate yearly means by ecoregion. In doing so we can compare precipitaion and species richness by ecoregion. 
 
 ```{r}
 mean_precip_by_ecoregion <- function(r_precip, year) {
@@ -387,7 +388,8 @@ ggplot(eco_rich_yr, aes(mean_precip, richness)) +
   ) +
   theme_minimal(base_size = 14)
 ```
-\n As we can see in this plot, there doesn't seem to be a clear linear relationship 
+
+As we can see in this plot, there doesn't seem to be a clear linear relationship 
 between precipitation and species richness. However this has just been some quick 
 exploration, so lets see what more we can learn.
 
@@ -403,8 +405,7 @@ ggplot(eco_rich, aes(x=LEV3_NAME, y= richness)) +
   labs(title = "Richness Counts by Ecoregion")
 ```
 
-When look at overall species counts by ecoregion, we can see that there isn't a large difference. 
-Mountainous and remote areas such as the Blue Moutains and Eastern Cascades have the largest counts (399 and 386 respectively), and dry xeric regions have the lowest (Snake River Plain with 99, and Central Basin and Range with 131) 
+When looking at overall species counts by ecoregion, we can see that there isn't a large difference. Mountainous and remote areas such as the Blue Moutains and Eastern Cascades have the largest counts (399 and 386 respectively), and dry xeric regions have the lowest (Snake River Plain with 99, and Central Basin and Range with 131) 
 
 Lets plot a linear regression line to visualize the overall trend of species richness by
 region overtime. 
@@ -449,6 +450,21 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Eastern Cascades", ],
   theme_minimal(base_size = 14)
 ```
 
+Both the Willamette Valley and Eastern Cascade show negative correlations.
+
+```{r}
+ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Coast Range", ],
+       aes(year, richness)) +
+  geom_point(size = 2, color = "firebrick") +
+  geom_smooth(method = "lm", se = TRUE, fill = "pink") +
+  labs(
+    title = "Richness by Year: Coast Range",
+    x = "Year",
+    y = "Richness"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
 ```{r}
 ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Columbia Plateau", ],
        aes(year, richness)) +
@@ -461,7 +477,21 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Columbia Plateau", ],
   ) +
   theme_minimal(base_size = 14)
 ```
-From this exploration, there isn't a meaningful difference in Oregon ecoregions when looking at species richness. Going into this project/question I was expecting the Willamette Valley to have lower species richness, however with 260 species, this put its right at the average for Oregon.
+
+```{r}
+ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Snake River Plain", ],
+       aes(year, richness)) +
+  geom_point(size = 2, color = "firebrick") +
+  geom_smooth(method = "lm", se = TRUE, fill = "pink") +
+  labs(
+    title = "Richness by Year: Snake River Plain",
+    x = "Year",
+    y = "Richness"
+  ) +
+  theme_minimal(base_size = 14)
+```
+
+From this exploration, although there are differences in Oregon ecoregions when looking at species richness, trends remain inconclusive. Going into this project/question I was expecting the Willamette Valley to have lower species richness, however with 260 total counted species, this puts it right at the average for Oregon. 
 
 ## Question 2
 Does yearly precipitation influence species richness and which
@@ -473,7 +503,7 @@ To begin, we'll run a quick linear model
 mod_precip <- lm(richness ~ mean_precip, data = eco_rich_yr)
 summary(mod_precip)
 ```
-Here I fitted a linear model with richness as the response and mean precipitation as the predictor. The estimated slope was β₁ = 0.514. Because the p-value was 0.6087, I failed to reject my null hypothesis. This suggests that, within this dataset, precipitation doesn't have much of a large effect on species richness. That is if we are looking at Oregon as a whole. 
+Here I fitted a linear model with richness as the response and mean precipitation as the predictor. The estimated slope was 0.514. Because the p-value was 0.6087 (much larger than 0.05), I failed to reject my null hypothesis. This suggests that, within this dataset, precipitation doesn't have much of a large effect on species richness. That is if we are looking at Oregon as a whole. 
 
 Lets focus on a specific region, in this case the Willamette Valley which is the most populated in Oregon. 
 
@@ -494,9 +524,9 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
 mod_precip <- lm(richness ~ mean_precip, data = eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ])
 summary(mod_precip)
 ```
-Here the estimated effect are stronger (β = −4.94, SE = 2.59), suggesting that wetter years were associated with slightly lower species richness. However this effect was not statistically significant (t = −1.91, p = 0.1145), and I therefore fail to reject the null hypothesis.
+Here the estimated effect are stronger (β = −4.94, std error = 2.59), suggesting that wetter years were associated with slightly lower species richness. However this effect was not statistically significant (t = −1.91, p = 0.1145), and I therefore fail to reject the null hypothesis.
 
-Despite the non-significant result, the model explained a substantial portion of the variation (R² = 0.42), indicating a potentially meaningful relationship that may be obscured by small sample size. Overall, the evidence isn't strong enough to conclude that precipitation alone predicts richness in the Willamette Valley.
+Despite the non-significant result, the model explained a substantial portion of the variation (R² = 0.42), indicating a potentially meaningful relationship that may be obscured by the limited time period. Overall, the evidence isn't strong enough to conclude that precipitation alone predicts richness in the Willamette Valley.
 
 ```{r}
 ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
@@ -510,7 +540,8 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
   ) +
   theme_minimal(base_size = 14)
 ```
-\n An even stronger association is richness by year.
+
+An even stronger association is richness by year.
 
 ```{r}
 mod_interaction <- lm(richness ~ mean_precip * LEV3_NAME, data = eco_rich_yr)
@@ -519,7 +550,7 @@ anova(mod_interaction)
 
 I tested whether the effect of precipitation on species richness differed among ecoregions using an interaction model. ANOVA results showed that mean precipitation did not significantly predict richness overall (F = 0.61, p = 0.44). Ecoregions naturally differed strongly in their average richness (F = 10.96, p = very small). 
 
-The interaction between precipitation and ecoregion was not significant (F = 0.82, p = 0.60), meaning that precipitation again didn't have an effect across ecoregions. This suggests that while ecoregions can vary greatly in richness, these differences are not explained by precipitation alone, and precipitation does not appear to be a major driver of richness patterns in any particular region.
+The interaction between precipitation and ecoregions was not significant (F = 0.82, p = 0.60), meaning that precipitation again didn't have an effect across ecoregions. This suggests that while ecoregions can vary greatly in richness, these differences are not explained by precipitation alone, and precipitation does not appear to be a major driver of richness patterns in any particular region.
 
 Overall, based the regression model across Oregon and the above interaction test, precipitation did not significantly predict richness. Results favor the null hypothesis. 
 
@@ -582,7 +613,7 @@ ggplot() +
   )
 ```
 
-# Conclusion and Further Thoughts
+# Conclusion
 
 After analyzing the OBA data set with the inclusion of precipitation and ecoregion data, we can 
 confidently conclude that Oregon's ecoregions follow similar patters in species richness, and that precipitation doesn't play a pivotal role in richness either. We failed to reject both our null hypothesis. 
@@ -601,4 +632,6 @@ The diagnostic plots above indicate that several assumptions of linear regressio
 
 Taken together, these diagnostics indicate that a simple linear model hasn't been the appropriate representation of the relationship between precipitation and species richness. With the current setup of 7 years, it doesn't take much for the model to get thrown off. Therefore the nonsignificant relationship (p = 0.61) should be interpreted with weariness. Nevertheless, the absence of any clear trend in the data suggests that precipitation is very unlikely to be a meaningful predictor of richness.
 
+## Further Thoughts 
 
+Although I wish the result were more exciting, I hope the data explored provided some insight into bee populations in Oregon. Thank you so much for reading this paper.
