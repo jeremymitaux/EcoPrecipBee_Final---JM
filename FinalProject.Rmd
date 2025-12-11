@@ -5,11 +5,17 @@ date: "2025-12-10"
 output: html_document
 ---
 
-# Introduction
+## Introduction
 
-Bees provide essential pollination services for both wild and cultivated plants, yet global and regional declines in bee diversity are increasingly reported (Potts, Simon G., et al. 2016; Ollerton, 2017). In the Pacific Northwest, native bee conservation has become a major concern as variations in yearly precipitation, temperature patterns, and floral phenology continue to increase (Kerr, Jeremy T., et al. 2015). Understanding how climatic gradients influence bee distributions is critical for predicting future biodiversity shifts and identifying conservation priorities. Insights from such studies is invaluable to ecologists and governments as we adapt to a changing world. Oregon’s diverse habits from the wet Coast Range to the arid high desert, create natural gradients for testing how climate (and in particular precipitation) affects native bee communities.
+Bees provide essential services for both wild and cultivated plants, yet global and regional declines in bee diversity are increasingly reported (Potts, Simon G., et al. 2016; Ollerton, 2017). In the Pacific Northwest, native bee conservation has become a major concern as variations in yearly precipitation, temperature patterns, and floral phenology continue to increase (Kerr, Jeremy T., et al. 2015). Understanding how climatic gradients influence bee distributions is critical for predicting future biodiversity shifts and identifying conservation priorities. Insights from such studies is invaluable to ecologists and governments as we adapt to a changing world. Oregon’s diverse habits from the wet Coast Range to the arid high desert, create natural gradients for testing how climate (and in particular precipitation) affects native bee communities.
 
 Previous studies have shown that bee richness in a particular area can be attributed to the local environment whether that be altitude (Hoiss et al., 2012) or where floral resources are abundant and not limited by drought or excessive moisture (Classen et al. 2015). In North America multiple analyses have found increased species homogenization in agricultural landscapes (Ponisio, et al. 2025). The Oregon Bee Atlas directed by OSU Extension and launched in 2018, fills a key gap by providing species-level records of bees across Oregon. Each record includes coordinates, date, collector, and associated floral host, enabling multi-year spatial analyses of bee diversity and composition.
+
+One area that is not present in the data set however is precipitation data. This 
+information could be useful for research by correlating bee species ocurrance with 
+region specific climate data. Bees as pollinators play key roles in the ecosystem, 
+but they require the availability of resources. Rain is a major part of that, and 
+different environements respond differently to yearly precipitation changes.  
 
 This project aims to address concerns due to these changing conditions. By combining Oregon Bee Atlas data along with precipitation measurements provided by the PRISM Group as OSU, along with Oregon ecoregions, I hope to answer the following: 
 
@@ -18,7 +24,16 @@ This project aims to address concerns due to these changing conditions. By combi
   2. Do yearly precipitation patterns influence species richness and which
 regions are most affected? How does variability changes between ecoregions when precipitation patterns change?
 
-# Data 
+What are my hypotheses? 
+
+  1. More urbanized regions such as the Willamette Valley will see lower species abundance compared to less developed areas. Under the null hypothesis, trends to 
+match similarly for the state. 
+  2. It is known that bees are not the biggest fans of rain, but plants definitely are.
+I am curious to see, given increases yearly differences, how ecoregions compare. 
+Are some more or less resistant to drought or wetter conditions? Under my null, 
+year by year difference should be negligable. 
+
+## Data 
 1. List 
 - PRISM Climate Data (annual precipitation, 2018–2024)
 URL: https://prism.oregonstate.edu/recent/ 
@@ -72,11 +87,6 @@ oba_sf <- st_as_sf(
 
 Load in PRISM data, shape file, and Oregon eco regions
 ```{r}
-# Oregon boundary shape file 
-or_bound <- vect("data/Oregon_Boundary/Oregon_State_Boundary.shp") |>
-  st_as_sf()
-or_bound <- st_transform(or_bound, 4326)
-
 # Precipitation raster data 
 rast_2018 <- rast("data/prism_2018/prism_ppt_us_30s_2018.tif")
 rast_2019 <- rast("data/prism_2019/prism_ppt_us_30s_2019.tif")
@@ -86,25 +96,36 @@ rast_2022 <- rast("data/prism_2022/prism_ppt_us_30s_2022.tif")
 rast_2023 <- rast("data/prism_2023/prism_ppt_us_30s_2023.tif")
 rast_2024 <- rast("data/prism_2024/prism_ppt_us_30s_2024.tif")
 
+or_bound <- vect("data/Oregon_Boundary/Oregon_State_Boundary.shp")
+or_bound <- project(or_bound, rast_2024)  # match CRS of raster
+precip_2024 <- crop(rast_2024, or_bound)
+
 precip_2018 <- crop(rast_2018, or_bound) # for 2018
+precip_2018 <- as.data.frame(precip_2018, xy = TRUE) # make into a data frame
 precip_2018$precip_inch <- precip_2018$prism_ppt_us_30s_2018 / 25.4 #convert mm to in 
 
 precip_2019 <- crop(rast_2019, or_bound) # for 2019
+precip_2019 <- as.data.frame(precip_2019, xy = TRUE)
 precip_2019$precip_inch <- precip_2019$prism_ppt_us_30s_2019 / 25.4
 
 precip_2020 <- crop(rast_2020, or_bound) # for 2020
+precip_2020 <- as.data.frame(precip_2020, xy = TRUE)
 precip_2020$precip_inch <- precip_2020$prism_ppt_us_30s_2020 / 25.4
 
 precip_2021 <- crop(rast_2021, or_bound) # for 2021
+precip_2021 <- as.data.frame(precip_2021, xy = TRUE)
 precip_2021$precip_inch <- precip_2021$prism_ppt_us_30s_2021 / 25.4
 
 precip_2022 <- crop(rast_2022, or_bound) # for 2022
+precip_2022 <- as.data.frame(precip_2022, xy = TRUE)
 precip_2022$precip_inch <- precip_2022$prism_ppt_us_30s_2022 / 25.4
 
 precip_2023 <- crop(rast_2023, or_bound) # for 2023
+precip_2023 <- as.data.frame(precip_2023, xy = TRUE)
 precip_2023$precip_inch <- precip_2023$prism_ppt_us_30s_2023 / 25.4
 
 precip_2024 <- crop(rast_2024, or_bound) # for 2024
+precip_2024 <- as.data.frame(precip_2024, xy = TRUE)
 precip_2024$precip_inch <- precip_2024$prism_ppt_us_30s_2024 / 25.4
 
 # Oregon eco region
@@ -113,14 +134,21 @@ or_ecoregion <- vect("data/oregon_ecoregion/ecoregion.shp") |>
 or_ecoregion <- st_transform(or_ecoregion, 4326) %>%
   filter(LEV3_NAME != "Puget Lowland") # I have no idea why this was in the data but removing it because pretty sure that's in Washington
 
-#Create a shape file with precipitation values 
-oba_or_sf <- oba_sf[or_bound, ]
+#Removes values outside of Oregon
+or_bound_sf <- st_as_sf(or_bound)
 ```
 
-# Data Wrangling, Summarizing, and Exploring 
+## Data Wrangling, Summarizing, and Exploring 
 
 ```{r}
-# Joining each bee record to its respective Level 3 eco region 
+# This will be the data used from the Oregon Bee Atlas
+# I've removed all the columns that I don't plan on using, such as plants, collecting method, collector name, etc. 
+# I have also made 'oba_sf' which is a shapefile that can be used to plot bee occurrences with the raster data 
+head(oba_clean)
+```
+
+```{r}
+# Joining each bee record to its respective Level 3 eco region  
 oba_eco <- st_join(
   oba_or_sf,
   or_ecoregion[, c("LEV3_NAME")],  # just keep the ecoregion name
@@ -140,13 +168,6 @@ or_eco_rich <- or_ecoregion %>%
   left_join(eco_rich, by = "LEV3_NAME")
 ```
 
-```{r}
-# This will be the data used from the Oregon Bee Atlas
-# I've removed all the columns that I don't plan on using, such as plants, collecting method, collector name, etc. 
-# I have also made 'oba_sf' which is a shapefile that can be used to plot bee occurrences with the raster data 
-head(oba_clean)
-```
-
 To calculate richness, the 'genus' and 'specificEpithet' columns are pasted together.
 From there we calculate the number of unique strings with the n_distinct function. 
 NOTE: This isn't a perfect measurement of species richness. This measurement only indicates how many different species were found, but doesn't indicate the abundance of them. Therefore there could be regions that are low in 'richness' yet still have high
@@ -155,8 +176,8 @@ populations of pollinators.
 ```{r}
 eco_rich_yr <- oba_eco %>%
   st_drop_geometry() %>% 
-  group_by(year, LEV3_NAME) %>% 
-  filter(!is.na(LEV3_NAME)) %>%
+  group_by(year, LEV3_NAME) %>% # filter by year 
+  filter(!is.na(LEV3_NAME)) %>% # remove any empty values
   summarize(
     richness = n_distinct(paste(genus, specificEpithet)),
     .groups = "drop"
@@ -205,10 +226,6 @@ ggplot(eco_rich_yr, aes(x = LEV3_NAME, y = richness)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-
-
-
-
 ```{r}
 #Plot ecoregions and create fun custom colors for them all 
 # I had an llm help with color choices and make edits to visualizations 
@@ -234,8 +251,8 @@ ggplot() +
   theme_void() +
   labs(
     fill = "Level III Ecoregions",
-    title = "Oregon Ecoregions with Bee Occurrences") +
-    theme(plot.title = element_text(hjust = 2.6))
+    title = "Oregon Ecoregions") +
+    theme(plot.title = element_text(hjust = 1))
 ```
 
 ```{r}
@@ -260,3 +277,107 @@ ggplot() +
     y = "Latitude",
   )
 ```
+Now lets incorporate the precipitation data 
+
+```{r}
+# basic plot for 2024
+ggplot() +
+  geom_raster(data = precip_2024,
+              aes(x = x, y = y, fill = precip_inch))
+```
+Lets use this precipitation data to learn more from the OBA data. What I am going
+to do now is create mean precipitation values for each ecoregion. 
+
+```{r}
+mean_precip_by_ecoregion <- function(r_precip, year, or_ecoregion) {
+  # Get means for each polygon in ecoregion file
+  vals <- terra::extract(
+    r_precip,
+    vect(or_ecoregion),
+    fun   = mean,
+    na.rm = TRUE)
+  
+   # Group these means by LEV3 
+  mean_yr <- or_ecoregion %>%
+    st_drop_geometry() %>%
+    select(LEV3_NAME) %>%
+    mutate(
+      year        = year,
+      mean_precip = vals$precip_inch
+    ) %>%
+  select(year, LEV3_NAME, mean_precip
+    )
+  mean_yr <- mean_yr %>%
+  group_by(year, LEV3_NAME) %>%
+  summarize(mean_precip = mean(mean_precip, na.rm = TRUE), .groups = "drop")
+}
+```
+
+```{r}
+#2018
+mean_precip_2018 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2018,      
+  year         = 2018,
+  or_ecoregion = or_ecoregion)
+#2019
+mean_precip_2019 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2019,      
+  year         = 2019,
+  or_ecoregion = or_ecoregion)
+#2020
+mean_precip_2020 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2020,     
+  year         = 2020,
+  or_ecoregion = or_ecoregion)
+#2021
+mean_precip_2021 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2021,     
+  year         = 2021,
+  or_ecoregion = or_ecoregion)
+#2022
+mean_precip_2022 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2022,    
+  year         = 2022,
+  or_ecoregion = or_ecoregion)
+#2023
+mean_precip_2023 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2023,    
+  year         = 2023,
+  or_ecoregion = or_ecoregion)
+#2024
+mean_precip_2024 <- mean_precip_by_ecoregion(
+  r_precip     = precip_2024,   
+  year         = 2024,
+  or_ecoregion = or_ecoregion)
+
+all_precip <- bind_rows(mean_precip_2018, mean_precip_2019, mean_precip_2020,
+                        mean_precip_2021, mean_precip_2022, mean_precip_2023,
+                        mean_precip_2024)
+eco_rich_yr <- eco_rich_yr %>%
+  left_join(all_precip, by = c("year", "LEV3_NAME")) %>%
+  filter(year  > 2017)
+```
+
+
+
+
+```{r}
+ggplot(eco_rich_yr, aes(mean_precip, richness)) +
+  geom_point(size = 2, color = "firebrick") +
+  geom_smooth(method = "lm", se = TRUE, fill = "pink") +
+  labs(
+    title = "Richness vs. Mean Precipitation: All Regions",
+    x = "Mean Precipitation in.",
+    y = "Richness"
+  ) +
+  theme_minimal(base_size = 14)
+```
+```
+
+
+
+## Hypothesis Testing 
+
+
+
+
