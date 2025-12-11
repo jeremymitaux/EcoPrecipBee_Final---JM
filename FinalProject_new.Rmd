@@ -28,9 +28,9 @@ What are my hypotheses?
 
   1. More urbanized regions such as the Willamette Valley will see lower species abundance compared to less developed areas. Under the null hypothesis there isn't any difference.
   2. It is known that bees are not the biggest fans of rain, but plants definitely are.
-I am curious to see, given increases yearly differences, how ecoregions compare. 
+I am curious to see, given increases in yearly differences, how ecoregions compare. 
 Are some more or less resistant to drought or wetter conditions? Under my null, 
-year by year difference should be negligable. 
+yearly precipitation change has no effect.
 
 ## Data 
 1. List 
@@ -372,7 +372,7 @@ mean_precip <- bind_rows(mean_precip_2018, mean_precip_2019, mean_precip_2020,
                         mean_precip_2021, mean_precip_2022, mean_precip_2023,
                         mean_precip_2024)
 eco_rich_yr <- eco_rich_yr %>%
-  left_join(all_precip, by = c("year", "LEV3_NAME")) %>%
+  left_join(mean_precip, by = c("year", "LEV3_NAME")) %>%
   filter(year  > 2017)
 ```
 
