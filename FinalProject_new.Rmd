@@ -368,7 +368,7 @@ mean_precip_2024 <- mean_precip_by_ecoregion(
   r_precip     = rast_2024,   
   year         = 2024)
 
-all_precip <- bind_rows(mean_precip_2018, mean_precip_2019, mean_precip_2020,
+mean_precip <- bind_rows(mean_precip_2018, mean_precip_2019, mean_precip_2020,
                         mean_precip_2021, mean_precip_2022, mean_precip_2023,
                         mean_precip_2024)
 eco_rich_yr <- eco_rich_yr %>%
@@ -468,6 +468,7 @@ Does yearly precipitation influence species richness and which
 regions are most affected? How does variability changes between ecoregions when precipitation patterns change? Under my null there is not difference, lets test this. 
 
 To begin, we'll run a quick linear model 
+
 ```{r}
 mod_precip <- lm(richness ~ mean_precip, data = eco_rich_yr)
 summary(mod_precip)
@@ -495,7 +496,7 @@ summary(mod_precip)
 ```
 Here the estimated effect are stronger (β = −4.94, SE = 2.59), suggesting that wetter years were associated with slightly lower species richness. However this effect was not statistically significant (t = −1.91, p = 0.1145), and I therefore fail to reject the null hypothesis.
 
-Despite the non-significant result, the model explained a substantial portion of the variation (R² = 0.42), indicating a potentially meaningful relationship that may be obscured by small sample size. Overall, the evidence isn't strong enough to conclude that precipitation alone predicts richness in the Willamette Valley. 
+Despite the non-significant result, the model explained a substantial portion of the variation (R² = 0.42), indicating a potentially meaningful relationship that may be obscured by small sample size. Overall, the evidence isn't strong enough to conclude that precipitation alone predicts richness in the Willamette Valley.
 
 ```{r}
 ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
@@ -509,7 +510,18 @@ ggplot(eco_rich_yr[eco_rich_yr$LEV3_NAME == "Willamette Valley", ]
   ) +
   theme_minimal(base_size = 14)
 ```
-\n An even stronger association is richness by year. 
+\n An even stronger association is richness by year.
+
+```{r}
+mod_interaction <- lm(richness ~ mean_precip * LEV3_NAME, data = eco_rich_yr)
+anova(mod_interaction)
+```
+
+I tested whether the effect of precipitation on species richness differed among ecoregions using an interaction model. ANOVA results showed that mean precipitation did not significantly predict richness overall (F = 0.61, p = 0.44). Ecoregions naturally differed strongly in their average richness (F = 10.96, p = very small). 
+
+The interaction between precipitation and ecoregion was not significant (F = 0.82, p = 0.60), meaning that precipitation again didn't have an effect across ecoregions. This suggests that while ecoregions can vary greatly in richness, these differences are not explained by precipitation alone, and precipitation does not appear to be a major driver of richness patterns in any particular region.
+
+Overall, based the regression model across Oregon and the above interaction test, precipitation did not significantly predict richness. Results favor the null hypothesis. 
 
 ## Visualizations 
 
@@ -572,8 +584,21 @@ ggplot() +
 
 # Conclusion and Further Thoughts
 
-Can discuss in your write-up what Linc said about the identification pipeline driving the richness results.
+After analyzing the OBA data set with the inclusion of precipitation and ecoregion data, we can 
+confidently conclude that Oregon's ecoregions follow similar patters in species richness, and that precipitation doesn't play a pivotal role in richness either. We failed to reject both our null hypothesis. 
 
-Captions with descriptions and interpretations? Test statistics?
+A major point of note for this project is the species richness metric, which was calculated by counting the number of unique strings in a given ecoregion. These strings were created by pasting the genus and specificEpithet columns. Last friday when presenting my poster, I was lucky to have 
+Lincoln Best in the crowd, who performs much of the taxonomic work for the atlas. He made a enlightening comment that completely re-frames the reality of my project. 
+
+Simply put, much of the data from recent years is still yet to be finished, and there are many bees that are yet to be identified. Therefore  newer years are under reported compared to older ones. With this new info, we can argue that the negative relationships seen with species richness is likely due to this lapse in metadata. 
+
+Lets do a diagnostic plot to see how well out linear model performed for question 2
+```{r}
+plot(mod_precip)   # Residuals, Q-Q plot
+```
+
+The diagnostic plots above indicate that several assumptions of linear regression are violated. The Residuals vs Fitted plot shows nonlinearity, while the Q–Q plot demonstrates deviations from normality, particularly in the tails. The Scale–Location plot reveals heteroscedasticity, and the Residuals vs Leverage plot identifies multiple points that strongly influence the regression line.
+
+Taken together, these diagnostics indicate that a simple linear model hasn't been the appropriate representation of the relationship between precipitation and species richness. With the current setup of 7 years, it doesn't take much for the model to get thrown off. Therefore the nonsignificant relationship (p = 0.61) should be interpreted with weariness. Nevertheless, the absence of any clear trend in the data suggests that precipitation is very unlikely to be a meaningful predictor of richness.
 
 
